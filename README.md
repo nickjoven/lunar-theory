@@ -287,6 +287,10 @@ python3 solar_system/tidal_rhythmites.py
 See [CLAIMS.md](CLAIMS.md) for all 18 numbered predictions with
 falsification criteria and residuals.
 
+## Author
+
+N. Joven — 2026 — [ORCID 0009-0008-0679-0812](https://orcid.org/0009-0008-0679-0812)
+
 ## License
 
 CC0 1.0 Universal — public domain.

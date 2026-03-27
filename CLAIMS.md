@@ -1,5 +1,7 @@
 # Predictions and Falsification Criteria
 
+N. Joven — 2026 — [ORCID 0009-0008-0679-0812](https://orcid.org/0009-0008-0679-0812)
+
 Every prediction is one instance of the same mechanism: an oscillation
 reaching an Arnold tongue boundary and entering the lower-cost locked
 regime. The framework inputs are the four primitives (Z, mediant, fixed
