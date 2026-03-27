@@ -12,6 +12,10 @@ Earth-Moon system, it resolves the fatal flaw of the giant impact
 hypothesis and twelve other lunar puzzles, all as instances of one
 mechanism.
 
+## Why now?
+
+Physics is missing a unifying model for systems that are simply translations of the same phenomenon. Discretely, this is no longer missing. [A theorem of subharmonics, nonlinear dynamics, and LOONA lore.](https://nickjoven.github.io/submediant-site/03_einstein/13_einstein_from_kuramoto.html#derivation-13-einstein-field-equations-from-the-rational-field-equation)
+
 ## The fatal flaw
 
 The [video](https://youtu.be/ghW7BEC0byg) that prompted this work
