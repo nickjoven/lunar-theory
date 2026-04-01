@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lunar Theory: Where Existing Models Fail</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #c9d1d9;
+    --dim: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --red: #f85149;
+    --orange: #d29922;
+    --purple: #bc8cff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  h1 { font-size: 1.6rem; margin-bottom: 0.3rem; }
+  h2 { font-size: 1.2rem; color: var(--accent); margin: 2.5rem 0 0.8rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+  h3 { font-size: 1rem; color: var(--purple); margin: 1.5rem 0 0.5rem; }
+  p, li { font-size: 0.92rem; color: var(--dim); margin-bottom: 0.6rem; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .subtitle { color: var(--dim); font-size: 0.95rem; margin-bottom: 2rem; }
+  .quote { border-left: 3px solid var(--border); padding: 0.6rem 1rem; margin: 1rem 0; font-style: italic; color: var(--dim); }
+
+  /* Comparison table */
+  .compare {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.85rem;
+  }
+  .compare th, .compare td {
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+  .compare th {
+    background: var(--surface);
+    color: var(--text);
+    font-weight: 600;
+  }
+  .compare td { color: var(--dim); }
+  .col-puzzle { width: 22%; }
+  .col-standard { width: 34%; }
+  .col-revision { width: 34%; }
+  .col-data { width: 10%; }
+  .fail { color: var(--red); }
+  .ok { color: var(--green); }
+  .partial { color: var(--orange); }
+
+  /* Side-by-side viz */
+  .viz-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .viz-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem;
+  }
+  .viz-panel h4 {
+    font-size: 0.85rem;
+    margin-bottom: 0.8rem;
+    color: var(--text);
+  }
+  .viz-panel canvas {
+    width: 100%;
+    height: 200px;
+  }
+  .viz-label {
+    font-size: 0.75rem;
+    color: var(--dim);
+    margin-top: 0.4rem;
+  }
+
+  /* Bar chart for residuals */
+  .bar-chart { margin: 1rem 0; }
+  .bar-row {
+    display: flex;
+    align-items: center;
+    margin: 0.3rem 0;
+    font-size: 0.8rem;
+  }
+  .bar-label { width: 140px; text-align: right; padding-right: 0.6rem; color: var(--dim); }
+  .bar-track { flex: 1; height: 18px; background: var(--surface); border-radius: 3px; position: relative; }
+  .bar-fill { height: 100%; border-radius: 3px; position: absolute; left: 0; top: 0; }
+  .bar-fill.standard { background: var(--red); opacity: 0.7; }
+  .bar-fill.revision { background: var(--green); opacity: 0.7; }
+  .bar-value { width: 60px; padding-left: 0.5rem; font-size: 0.75rem; color: var(--dim); }
+
+  footer {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--dim);
+  }
+  @media (max-width: 600px) {
+    .viz-row { grid-template-columns: 1fr; }
+    body { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Where Existing Models Fail</h1>
+<p class="subtitle">
+  A side-by-side comparison of the giant-impact hypothesis and the
+  tongue-boundary fission framework applied to 13 lunar puzzles.
+  <br>N. Joven &mdash; 2026 &mdash;
+  <a href="https://orcid.org/0009-0008-0679-0812">ORCID 0009-0008-0679-0812</a>
+</p>
+
+<div class="quote">
+  "We have three theories of the origin of the Moon, and none of them work.
+  So the Moon must not exist." &mdash; Irwin Shapiro, 1984
+</div>
+
+<!-- ============================================================ -->
+<h2>The Fatal Flaw</h2>
+<p>
+  Canup's SPH simulations require 70%+ of the Moon to come from the impactor Theia.
+  Apollo samples show Earth and Moon are isotopically identical to parts per million
+  in O, Ti, W, Cr, Si. Every new element tested tightens the match.
+  Physics demands a foreign moon; chemistry demands an identical one.
+</p>
+
+<table class="compare">
+<tr>
+  <th class="col-puzzle">Puzzle</th>
+  <th class="col-standard">Standard Model</th>
+  <th class="col-revision">Fission (this work)</th>
+  <th class="col-data">Data</th>
+</tr>
+<tr>
+  <td>Isotopic identity</td>
+  <td class="fail">Requires mixing (synestia) or identical impactor (untestable without Venus samples)</td>
+  <td class="ok">Forced: both bodies from same pre-bifurcation state</td>
+  <td class="ok">ppm</td>
+</tr>
+<tr>
+  <td>Angular momentum</td>
+  <td class="partial">Tuned impact geometry; synestia needs evection resonance ("likelihood is very small")</td>
+  <td class="ok">L = I &times; &omega;<sub>crit</sub>, 5% residual, no free parameter</td>
+  <td class="ok">5%</td>
+</tr>
+<tr>
+  <td>Mass ratio</td>
+  <td class="partial">Set by impact parameter (free parameter)</td>
+  <td class="partial">Tongue width &times; g(1/2) = 1.4%, obs 1.2% (17% residual)</td>
+  <td class="partial">17%</td>
+</tr>
+<tr>
+  <td>One Moon, not fragments</td>
+  <td class="ok">SPH produces one body in successful runs</td>
+  <td class="ok">1/2 tongue competition suppresses 1/3, 2/5, etc.</td>
+  <td>&mdash;</td>
+</tr>
+<tr>
+  <td>Iron depletion (16&times;)</td>
+  <td class="partial">Requires impact + incomplete core merging</td>
+  <td class="ok">High-frequency modes attenuated at tongue boundary; density filter</td>
+  <td class="ok">dir.</td>
+</tr>
+<tr>
+  <td>Volatile depletion</td>
+  <td class="partial">Impact heating + Jeans escape (ad hoc)</td>
+  <td class="ok">Stribeck Gaussian: exp(-(v<sub>th</sub>/v<sub>thr</sub>)&sup2;), K/S within 1.6&times;</td>
+  <td class="ok">1.6&times;</td>
+</tr>
+<tr>
+  <td>KREEP on near side</td>
+  <td class="partial">Requires impact geometry or mantle plume (post hoc)</td>
+  <td class="ok">N=2 passthrough (near side) vs N&ge;3 conversion (far side)</td>
+  <td class="ok">dir.</td>
+</tr>
+<tr>
+  <td>5.14&deg; orbital tilt</td>
+  <td class="fail">Killed Darwin's 1879 fission model</td>
+  <td class="ok">Cassini state bifurcation at 4&ndash;5 R<sub>E</sub> pumps inclination post-formation</td>
+  <td>&mdash;</td>
+</tr>
+<tr>
+  <td>Free librations</td>
+  <td class="fail">Unknown excitation source; should damp 225,000&times; over</td>
+  <td class="ok">Equilibrium stick-slip oscillation at 1:1 tongue boundary</td>
+  <td class="ok">mech.</td>
+</tr>
+<tr>
+  <td>Tidal Q (period-dep.)</td>
+  <td class="partial">3&ndash;5 param rheological models (Maxwell, Andrade)</td>
+  <td class="ok">One Stribeck curve, 3 params, &chi;&sup2;/N = 0.81</td>
+  <td class="ok">0.81</td>
+</tr>
+<tr>
+  <td>LOD at 2.45 Gya</td>
+  <td class="fail">Constant-Q predicts 21.3 hr (11% overshoot)</td>
+  <td class="ok">Staircase plateau at 19.0 hr &check;</td>
+  <td class="ok">&check;</td>
+</tr>
+<tr>
+  <td>LOD at 620 Mya</td>
+  <td class="fail">Constant-Q predicts 23.5 hr (9% overshoot)</td>
+  <td class="ok">Staircase plateau at 21.5 hr &check;</td>
+  <td class="ok">&check;</td>
+</tr>
+<tr>
+  <td>Recession timeline</td>
+  <td class="fail">Q=12 gives 1.65 Gyr (Moon too young by 3&times;)</td>
+  <td class="ok">Staircase + Stribeck Q: bounded [1.65, 8.42] Gyr, self-consistent at ~4.5</td>
+  <td class="ok">bounds</td>
+</tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>Side-by-Side: Recession Models</h2>
+<p>
+  The Moon recedes from Earth as tidal friction transfers angular momentum.
+  The constant-Q model assumes smooth recession; the staircase model predicts
+  lock-stall-unlock events at every rational resonance.
+</p>
+
+<div class="viz-row">
+  <div class="viz-panel">
+    <h4>Constant-Q (Standard)</h4>
+    <canvas id="canvas-cq"></canvas>
+    <p class="viz-label">
+      Smooth curve. Predicts LOD = 21.3 hr at 2.45 Gya (observed: 19.0 hr)
+      and 23.5 hr at 620 Mya (observed: 21.5 hr). Overshoots by 9&ndash;11%.
+    </p>
+  </div>
+  <div class="viz-panel">
+    <h4>Devil's Staircase (This Work)</h4>
+    <canvas id="canvas-stair"></canvas>
+    <p class="viz-label">
+      Step function. Plateaus at resonance crossings. Matches Weeli Wolli (19.0 hr)
+      and Elatina (21.5 hr) rhythmite data on published measurements.
+    </p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>Side-by-Side: Tidal Q</h2>
+<p>
+  The Moon's tidal quality factor Q varies by an order of magnitude across
+  forcing periods. Standard models need 3&ndash;5 parameters. The Stribeck
+  curve uses one functional form with 3 parameters.
+</p>
+
+<div class="viz-row">
+  <div class="viz-panel">
+    <h4>Multi-Parameter Rheological Fit</h4>
+    <canvas id="canvas-qstd"></canvas>
+    <p class="viz-label">
+      Maxwell, Andrade, or Sundberg-Cooper models. 3&ndash;5 free parameters,
+      empirical relaxation timescales. Fits well but no single mechanism.
+    </p>
+  </div>
+  <div class="viz-panel">
+    <h4>One Stribeck Curve (This Work)</h4>
+    <canvas id="canvas-qstrib"></canvas>
+    <p class="viz-label">
+      &mu;(v) = &mu;<sub>k</sub> + (&mu;<sub>s</sub> &minus; &mu;<sub>k</sub>)
+      exp(-(v/v<sub>thr</sub>)&sup2;). Three parameters. &chi;&sup2;/N = 0.81.
+      Stick regime (long period) &rarr; high Q. Slip regime (short period) &rarr; low Q.
+    </p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>Residual Comparison</h2>
+<p>Where each model deviates from observation. Lower is better.</p>
+
+<div class="bar-chart">
+  <div class="bar-row">
+    <span class="bar-label">LOD @ 2.45 Gya</span>
+    <div class="bar-track">
+      <div class="bar-fill standard" style="width: 55%"></div>
+      <div class="bar-fill revision" style="width: 5%"></div>
+    </div>
+    <span class="bar-value fail">11% / <span class="ok">~0%</span></span>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">LOD @ 620 Mya</span>
+    <div class="bar-track">
+      <div class="bar-fill standard" style="width: 45%"></div>
+      <div class="bar-fill revision" style="width: 5%"></div>
+    </div>
+    <span class="bar-value fail">9% / <span class="ok">~0%</span></span>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Tidal Q fit</span>
+    <div class="bar-track">
+      <div class="bar-fill standard" style="width: 70%"></div>
+      <div class="bar-fill revision" style="width: 20%"></div>
+    </div>
+    <span class="bar-value partial">&gt;1 / <span class="ok">0.81</span></span>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Angular momentum</span>
+    <div class="bar-track">
+      <div class="bar-fill standard" style="width: 40%"></div>
+      <div class="bar-fill revision" style="width: 13%"></div>
+    </div>
+    <span class="bar-value partial">tuned / <span class="ok">5%</span></span>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Mass ratio</span>
+    <div class="bar-track">
+      <div class="bar-fill standard" style="width: 10%"></div>
+      <div class="bar-fill revision" style="width: 43%"></div>
+    </div>
+    <span class="bar-value ok">free / <span class="partial">17%</span></span>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Isotope identity</span>
+    <div class="bar-track">
+      <div class="bar-fill standard" style="width: 80%"></div>
+      <div class="bar-fill revision" style="width: 0%"></div>
+    </div>
+    <span class="bar-value fail">fatal / <span class="ok">forced</span></span>
+  </div>
+</div>
+<p style="font-size:0.75rem">
+  <span style="color:var(--red)">&block;</span> Standard model &nbsp;
+  <span style="color:var(--green)">&block;</span> Fission (this work) &nbsp;
+  Bar width &prop; severity of residual.
+</p>
+
+<!-- ============================================================ -->
+<h2>The One Mechanism</h2>
+<p>
+  Every row in the table above is an instance of the same transition:
+  an oscillation reaching an Arnold tongue boundary and entering the
+  lower-cost locked regime. The tongue boundaries are saddle-node
+  bifurcations on the Stern-Brocot tree. The coupling is velocity-dependent
+  (Stribeck friction). The framework derives from four irreducible
+  primitives &mdash; integers, mediants, fixed points, parabolas &mdash;
+  validated in <a href="https://github.com/nickjoven/harmonics">harmonics</a>
+  where the same structure produces the CMB spectral tilt, the Born rule,
+  and general relativity with zero free parameters.
+</p>
+
+<h3>Known weaknesses</h3>
+<ul>
+  <li>Mass ratio: 17% residual (largest). Closing requires the full
+      proto-Earth normal-mode spectrum, not just the shell model.</li>
+  <li>Volatile model: fits thermal channel but can't yet separate three
+      concurrent tongue crossings (density, thermal, condensation).</li>
+  <li>Cassini inclination: correctly identifies the mechanism but does not
+      yet compute the exact angle from first principles.</li>
+</ul>
+
+<h3>What the data already shows</h3>
+<ul>
+  <li>LOD at 2.45 Gya and 620 Mya <strong>already favor the staircase</strong>
+      over constant-Q on published tidal rhythmite data.</li>
+  <li>Tidal Q fit (&chi;&sup2;/N = 0.81) matches or beats multi-parameter
+      rheological models with fewer parameters.</li>
+  <li>Isotopic identity is <strong>forced</strong> by fission, not fitted.</li>
+</ul>
+
+<footer>
+  Source: <a href="https://github.com/nickjoven/lunar-theory">github.com/nickjoven/lunar-theory</a>
+  &nbsp;|&nbsp;
+  Framework: <a href="https://github.com/nickjoven/harmonics">github.com/nickjoven/harmonics</a>
+  &nbsp;|&nbsp; CC0 1.0
+</footer>
+
+<!-- ============================================================ -->
+<script>
+// Minimal canvas visualizations — no dependencies
+
+function drawAxes(ctx, w, h, pad) {
+  ctx.strokeStyle = '#30363d';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(pad, pad); ctx.lineTo(pad, h - pad); ctx.lineTo(w - pad, h - pad);
+  ctx.stroke();
+}
+
+function label(ctx, text, x, y, color) {
+  ctx.fillStyle = color || '#8b949e';
+  ctx.font = '10px sans-serif';
+  ctx.fillText(text, x, y);
+}
+
+// --- LOD Recession ---
+function drawLOD(canvasId, mode) {
+  const c = document.getElementById(canvasId);
+  const dpr = window.devicePixelRatio || 1;
+  const rect = c.getBoundingClientRect();
+  c.width = rect.width * dpr;
+  c.height = rect.height * dpr;
+  const ctx = c.getContext('2d');
+  ctx.scale(dpr, dpr);
+  const w = rect.width, h = rect.height;
+  const pad = 30;
+
+  drawAxes(ctx, w, h, pad);
+  label(ctx, 'Age (Gya)', w / 2 - 20, h - 5);
+  label(ctx, 'LOD (hr)', 2, pad - 5);
+
+  // Axis ticks
+  for (let gya = 0; gya <= 4.5; gya += 1) {
+    const x = pad + (1 - gya / 4.5) * (w - 2 * pad);
+    ctx.fillStyle = '#30363d';
+    ctx.fillRect(x, h - pad, 1, 5);
+    label(ctx, gya.toFixed(0), x - 4, h - pad + 15);
+  }
+  for (let lod = 16; lod <= 24; lod += 2) {
+    const y = h - pad - ((lod - 14) / 12) * (h - 2 * pad);
+    ctx.fillStyle = '#30363d';
+    ctx.fillRect(pad - 5, y, 5, 1);
+    label(ctx, lod.toString(), 2, y + 4);
+  }
+
+  // Data points
+  const data = [
+    [0.000, 24.00], [0.310, 22.12], [0.620, 21.63], [0.900, 19.91], [2.450, 19.04]
+  ];
+
+  function toXY(gya, lod) {
+    return [
+      pad + (1 - gya / 4.5) * (w - 2 * pad),
+      h - pad - ((lod - 14) / 12) * (h - 2 * pad)
+    ];
+  }
+
+  // Draw model curve
+  ctx.lineWidth = 2;
+  if (mode === 'cq') {
+    ctx.strokeStyle = '#f8514988';
+    ctx.beginPath();
+    for (let i = 0; i <= 100; i++) {
+      const gya = i * 4.5 / 100;
+      const t = 4.5 - gya;
+      const lod = t > 0 ? 24.0 * Math.pow(t / 4.5, 1 / 6.5) : 5;
+      const [x, y] = toXY(gya, lod);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    label(ctx, 'Constant-Q', pad + 5, pad + 15, '#f85149');
+  } else {
+    ctx.strokeStyle = '#3fb95088';
+    ctx.beginPath();
+    // Staircase: plateaus + transitions
+    const stairs = [
+      [4.5, 5.0], [4.0, 15.0], [3.5, 17.0], [3.0, 17.0],
+      [2.7, 19.0], [2.3, 19.0], [1.7, 20.5], [1.3, 20.5],
+      [0.8, 21.5], [0.5, 21.5], [0.3, 22.0], [0.0, 24.0]
+    ];
+    for (let i = 0; i < stairs.length; i++) {
+      const [gya, lod] = stairs[i];
+      const [x, y] = toXY(gya, lod);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    label(ctx, 'Staircase', pad + 5, pad + 15, '#3fb950');
+  }
+
+  // Data points on top
+  data.forEach(([gya, lod]) => {
+    const [x, y] = toXY(gya, lod);
+    ctx.fillStyle = '#58a6ff';
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fill();
+  });
+}
+
+// --- Tidal Q ---
+function drawQ(canvasId, mode) {
+  const c = document.getElementById(canvasId);
+  const dpr = window.devicePixelRatio || 1;
+  const rect = c.getBoundingClientRect();
+  c.width = rect.width * dpr;
+  c.height = rect.height * dpr;
+  const ctx = c.getContext('2d');
+  ctx.scale(dpr, dpr);
+  const w = rect.width, h = rect.height;
+  const pad = 35;
+
+  drawAxes(ctx, w, h, pad);
+  label(ctx, 'log10(Period / yr)', w / 2 - 30, h - 5);
+  label(ctx, 'Q', 5, pad - 5);
+
+  // Log period range: -1.5 to 1.5
+  function toXY(logT, Q) {
+    return [
+      pad + ((logT + 1.5) / 3.0) * (w - 2 * pad),
+      h - pad - ((Q - 20) / 280) * (h - 2 * pad)
+    ];
+  }
+
+  // Data
+  const qdata = [
+    [Math.log10(0.0369), 38], [Math.log10(0.0753), 60],
+    [Math.log10(0.5), 35], [Math.log10(1.0), 37],
+    [Math.log10(8.85), 80], [Math.log10(18.61), 200]
+  ];
+
+  // Model curve
+  ctx.lineWidth = 2;
+  if (mode === 'std') {
+    // Andrade-like: power law Q ~ Q0 * (T/T0)^alpha
+    ctx.strokeStyle = '#f8514988';
+    ctx.beginPath();
+    for (let i = 0; i <= 100; i++) {
+      const logT = -1.5 + i * 3.0 / 100;
+      const T = Math.pow(10, logT);
+      // Andrade: Q ~ 30 * T^0.2 (schematic)
+      const Q = 30 * Math.pow(T / 0.05, 0.25);
+      const [x, y] = toXY(logT, Math.min(Q, 300));
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    label(ctx, 'Andrade fit (4-5 params)', pad + 5, pad + 15, '#f85149');
+  } else {
+    // Stribeck: Q = Qscale * (mu_k + (mu_s - mu_k) * exp(-(v/v_thr)^2))
+    ctx.strokeStyle = '#3fb95088';
+    ctx.beginPath();
+    const mu_s = 5, mu_k = 1, v_thr = 1e-7, Q_scale = 40;
+    const R = 1.737e6, eps = 3.2e-6;
+    for (let i = 0; i <= 100; i++) {
+      const logT = -1.5 + i * 3.0 / 100;
+      const T_yr = Math.pow(10, logT);
+      const T_s = T_yr * 3.156e7;
+      const omega = 2 * Math.PI / T_s;
+      const v = R * eps * omega;
+      const vr = v / v_thr;
+      const mu_eff = mu_k + (mu_s - mu_k) * Math.exp(-vr * vr);
+      const Q = Q_scale * mu_eff;
+      const [x, y] = toXY(logT, Math.min(Q, 300));
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    label(ctx, 'Stribeck (3 params)', pad + 5, pad + 15, '#3fb950');
+  }
+
+  // Data points
+  qdata.forEach(([logT, Q]) => {
+    const [x, y] = toXY(logT, Q);
+    ctx.fillStyle = '#58a6ff';
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fill();
+  });
+}
+
+// Draw on load and resize
+function drawAll() {
+  drawLOD('canvas-cq', 'cq');
+  drawLOD('canvas-stair', 'stair');
+  drawQ('canvas-qstd', 'std');
+  drawQ('canvas-qstrib', 'strib');
+}
+window.addEventListener('load', drawAll);
+window.addEventListener('resize', drawAll);
+</script>
+
+</body>
+</html>

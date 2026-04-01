@@ -257,13 +257,20 @@ The same tongue-boundary crossing applies to:
 
 ## Running
 
-Requires [harmonics](https://github.com/nickjoven/harmonics) as a
-sibling directory. Python 3.10+, no external packages.
+Requires [harmonics](https://github.com/nickjoven/harmonics) (included
+as a git submodule). Python 3.10+, no external packages.
 
 ```bash
+# Clone with submodule
+git clone --recurse-submodules https://github.com/nickjoven/lunar-theory.git
+# Or, if already cloned:
+git submodule update --init
+
+
 # Origin
 python3 origin/bifurcation_fission.py
 python3 origin/field_equation.py
+python3 origin/g_half_density.py
 
 # Composition
 python3 composition/iron_depletion.py
@@ -278,6 +285,7 @@ python3 history/self_consistent_recession.py
 python3 behavior/tidal_q_stribeck.py
 python3 behavior/libration_tongue_edge.py
 python3 behavior/cassini_inclination.py
+python3 behavior/ocean_resonance_q.py
 
 # Solar system
 python3 solar_system/mercury_32.py
@@ -285,6 +293,11 @@ python3 solar_system/io_volcanism.py
 python3 solar_system/kirkwood_gaps.py
 python3 solar_system/tidal_rhythmites.py
 ```
+
+## Visual comparison
+
+Open [index.html](index.html) for an interactive side-by-side comparison
+of the standard model vs the tongue-boundary framework across all 13 puzzles.
 
 ## Predictions
 
