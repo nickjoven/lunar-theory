@@ -33,7 +33,7 @@ import math
 import sys
 import os
 
-DERIV_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'harmonics', 'sync_cost', 'derivations')
+DERIV_DIR = os.path.join(os.path.dirname(__file__), '..', 'harmonics', 'sync_cost', 'derivations')
 sys.path.insert(0, DERIV_DIR)
 
 from circle_map import (

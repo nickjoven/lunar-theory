@@ -31,7 +31,7 @@ import math
 import sys
 import os
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', 'harmonics'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'harmonics'))
 from driven_stribeck import DrivenStribeckOscillator
 from bifurcation_sweep import power_spectrum, peak_power
 

@@ -31,7 +31,7 @@ import sys
 import os
 
 # Import lattice simulation
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', 'harmonics'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'harmonics'))
 from stribeck_lattice import StribeckLattice
 from bifurcation_sweep import power_spectrum, peak_power
 
