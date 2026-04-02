@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lunar Theory: Where Existing Models Fail</title>
+<title>Lunar Theory: Limitations of Existing Models</title>
 <style>
   :root {
     --bg: #0d1117;
@@ -106,6 +106,41 @@
   .bar-fill.revision { background: var(--green); opacity: 0.7; }
   .bar-value { width: 60px; padding-left: 0.5rem; font-size: 0.75rem; color: var(--dim); }
 
+  /* Equations */
+  .eq {
+    display: block;
+    text-align: center;
+    margin: 1rem 0;
+    font-size: 0.92rem;
+    color: var(--text);
+    font-family: 'Times New Roman', 'Latin Modern Math', Georgia, serif;
+    line-height: 1.8;
+  }
+  .eq-label {
+    float: right;
+    color: var(--dim);
+    font-size: 0.8rem;
+  }
+  .def-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+    font-size: 0.88rem;
+    color: var(--dim);
+    line-height: 1.7;
+  }
+  .def-block dt {
+    color: var(--text);
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+  .def-block dd {
+    margin-left: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+
   footer {
     margin-top: 3rem;
     padding-top: 1rem;
@@ -121,10 +156,10 @@
 </head>
 <body>
 
-<h1>Where Existing Models Fail</h1>
+<h1>Limitations of Existing Models</h1>
 <p class="subtitle">
-  A side-by-side comparison of the giant-impact hypothesis and the
-  tongue-boundary fission framework applied to 13 lunar puzzles.
+  A systematic comparison of the canonical giant-impact hypothesis and the
+  tongue-boundary fission framework across thirteen outstanding problems in selenogony.
   <br>N. Joven &mdash; 2026 &mdash;
   <a href="https://orcid.org/0009-0008-0679-0812">ORCID 0009-0008-0679-0812</a>
 </p>
@@ -135,12 +170,16 @@
 </div>
 
 <!-- ============================================================ -->
-<h2>The Fatal Flaw</h2>
+<h2>The Isotopic Composition Problem</h2>
 <p>
-  Canup's SPH simulations require 70%+ of the Moon to come from the impactor Theia.
-  Apollo samples show Earth and Moon are isotopically identical to parts per million
-  in O, Ti, W, Cr, Si. Every new element tested tightens the match.
-  Physics demands a foreign moon; chemistry demands an identical one.
+  Smoothed-particle hydrodynamics simulations of the canonical giant impact
+  (Canup, 2004; 2012) predict that &ge;70% of the lunar mass derives from the
+  impactor Theia. However, Apollo return samples demonstrate that Earth and Moon
+  are isotopically indistinguishable at the parts-per-million level across
+  O, Ti, W, Cr, and Si (Zhang et al., 2012; Touboul et al., 2015). Each
+  additional isotopic system measured has reinforced this identity. The canonical
+  model thus confronts a fundamental tension: dynamical constraints require a
+  compositionally foreign Moon, whereas geochemical data require an identical one.
 </p>
 
 <table class="compare">
@@ -152,90 +191,175 @@
 </tr>
 <tr>
   <td>Isotopic identity</td>
-  <td class="fail">Requires mixing (synestia) or identical impactor (untestable without Venus samples)</td>
-  <td class="ok">Forced: both bodies from same pre-bifurcation state</td>
+  <td class="fail">Requires post-impact homogenization (synestia; Lock et al., 2018) or a compositionally identical impactor (untestable absent Venus samples)</td>
+  <td class="ok">Follows necessarily: both bodies derive from a common pre-bifurcation state</td>
   <td class="ok">ppm</td>
 </tr>
 <tr>
   <td>Angular momentum</td>
-  <td class="partial">Tuned impact geometry; synestia needs evection resonance ("likelihood is very small")</td>
-  <td class="ok">L = I &times; &omega;<sub>crit</sub>, 5% residual, no free parameter</td>
+  <td class="partial">Tuned impact geometry; synestia pathway requires evection resonance capture (&#x201C;likelihood is very small&#x201D;; Wisdom &amp; Tian, 2015)</td>
+  <td class="ok">L = I &times; &omega;<sub>crit</sub>; 5% residual with no free parameters</td>
   <td class="ok">5%</td>
 </tr>
 <tr>
   <td>Mass ratio</td>
-  <td class="partial">Set by impact parameter (free parameter)</td>
-  <td class="partial">Tongue width &times; g(1/2) = 1.4%, obs 1.2% (17% residual)</td>
+  <td class="partial">Determined by impact parameter (unconstrained)</td>
+  <td class="partial">Tongue width &times; g(1/2) = 1.4%; observed 1.2% (17% residual)</td>
   <td class="partial">17%</td>
 </tr>
 <tr>
   <td>One Moon, not fragments</td>
-  <td class="ok">SPH produces one body in successful runs</td>
-  <td class="ok">1/2 tongue competition suppresses 1/3, 2/5, etc.</td>
+  <td class="ok">SPH simulations yield a single body in successful runs</td>
+  <td class="ok">Dominance of the 1/2 Arnold tongue suppresses competing resonances (1/3, 2/5, etc.)</td>
   <td>&mdash;</td>
 </tr>
 <tr>
   <td>Iron depletion (16&times;)</td>
-  <td class="partial">Requires impact + incomplete core merging</td>
-  <td class="ok">High-frequency modes attenuated at tongue boundary; density filter</td>
+  <td class="partial">Attributed to incomplete core merging during impact</td>
+  <td class="ok">High-frequency normal modes attenuated at the tongue boundary; acts as a density-dependent filter</td>
   <td class="ok">dir.</td>
 </tr>
 <tr>
   <td>Volatile depletion</td>
-  <td class="partial">Impact heating + Jeans escape (ad hoc)</td>
-  <td class="ok">Stribeck Gaussian: exp(-(v<sub>th</sub>/v<sub>thr</sub>)&sup2;), K/S within 1.6&times;</td>
+  <td class="partial">Attributed to impact heating and subsequent Jeans escape (post hoc)</td>
+  <td class="ok">Stribeck Gaussian filter: exp(&minus;(v<sub>th</sub>/v<sub>thr</sub>)&sup2;); reproduces observed K/S ratio to within a factor of 1.6</td>
   <td class="ok">1.6&times;</td>
 </tr>
 <tr>
   <td>KREEP on near side</td>
-  <td class="partial">Requires impact geometry or mantle plume (post hoc)</td>
-  <td class="ok">N=2 passthrough (near side) vs N&ge;3 conversion (far side)</td>
+  <td class="partial">Requires specific impact geometry or mantle plume dynamics (post hoc)</td>
+  <td class="ok">N=2 passthrough on the nearside vs. N&ge;3 mode conversion on the farside</td>
   <td class="ok">dir.</td>
 </tr>
 <tr>
   <td>5.14&deg; orbital tilt</td>
-  <td class="fail">Killed Darwin's 1879 fission model</td>
-  <td class="ok">Cassini state bifurcation at 4&ndash;5 R<sub>E</sub> pumps inclination post-formation</td>
+  <td class="fail">Historically regarded as incompatible with classical fission (Darwin, 1879)</td>
+  <td class="ok">Cassini-state bifurcation at 4&ndash;5 R<sub>E</sub> excites inclination post-formation</td>
   <td>&mdash;</td>
 </tr>
 <tr>
   <td>Free librations</td>
-  <td class="fail">Unknown excitation source; should damp 225,000&times; over</td>
-  <td class="ok">Equilibrium stick-slip oscillation at 1:1 tongue boundary</td>
+  <td class="fail">No identified excitation source; expected damping exceeds 2.25 &times; 10<sup>5</sup></td>
+  <td class="ok">Sustained as an equilibrium stick-slip oscillation at the 1:1 tongue boundary</td>
   <td class="ok">mech.</td>
 </tr>
 <tr>
   <td>Tidal Q (period-dep.)</td>
-  <td class="partial">3&ndash;5 param rheological models (Maxwell, Andrade)</td>
-  <td class="ok">One Stribeck curve, 3 params, &chi;&sup2;/N = 0.81</td>
+  <td class="partial">Requires 3&ndash;5 parameter rheological models (Maxwell, Andrade, Sundberg-Cooper)</td>
+  <td class="ok">Single Stribeck curve with 3 parameters; &chi;&sup2;/N = 0.81</td>
   <td class="ok">0.81</td>
 </tr>
 <tr>
-  <td>LOD at 2.45 Gya</td>
-  <td class="fail">Constant-Q predicts 21.3 hr (11% overshoot)</td>
-  <td class="ok">Staircase plateau at 19.0 hr &check;</td>
+  <td>LOD at 2.45 Ga</td>
+  <td class="fail">Constant-Q extrapolation yields 21.3 hr (11% overshoot)</td>
+  <td class="ok">Staircase model predicts plateau at 19.0 hr &check;</td>
   <td class="ok">&check;</td>
 </tr>
 <tr>
-  <td>LOD at 620 Mya</td>
-  <td class="fail">Constant-Q predicts 23.5 hr (9% overshoot)</td>
-  <td class="ok">Staircase plateau at 21.5 hr &check;</td>
+  <td>LOD at 620 Ma</td>
+  <td class="fail">Constant-Q extrapolation yields 23.5 hr (9% overshoot)</td>
+  <td class="ok">Staircase model predicts plateau at 21.5 hr &check;</td>
   <td class="ok">&check;</td>
 </tr>
 <tr>
   <td>Recession timeline</td>
-  <td class="fail">Q=12 gives 1.65 Gyr (Moon too young by 3&times;)</td>
-  <td class="ok">Staircase + Stribeck Q: bounded [1.65, 8.42] Gyr, self-consistent at ~4.5</td>
+  <td class="fail">Constant Q = 12 yields 1.65 Gyr (underestimates lunar age by a factor of ~3)</td>
+  <td class="ok">Staircase recession with Stribeck Q: bounded to [1.65, 8.42] Gyr; self-consistent at ~4.5 Gyr</td>
   <td class="ok">bounds</td>
 </tr>
 </table>
 
 <!-- ============================================================ -->
-<h2>Side-by-Side: Recession Models</h2>
+<h2>Formal Definitions</h2>
 <p>
-  The Moon recedes from Earth as tidal friction transfers angular momentum.
-  The constant-Q model assumes smooth recession; the staircase model predicts
-  lock-stall-unlock events at every rational resonance.
+  The framework rests on three principal equations. The first governs
+  the topology of resonance locking; the second specifies the
+  velocity-dependent dissipation; the third constrains the total angular
+  momentum at bifurcation.
+</p>
+
+<h3>1. Arnold Tongue Boundary</h3>
+<p>
+  For a driven oscillator with natural frequency &omega;<sub>0</sub> and
+  driving frequency &omega;<sub>d</sub>, the boundary of the p/q Arnold
+  tongue in the (&omega;<sub>d</sub>/&omega;<sub>0</sub>,&thinsp;&epsilon;)
+  parameter plane satisfies:
+</p>
+<span class="eq">
+  <span class="eq-label">(1)</span>
+  &omega;<sub>d</sub> / &omega;<sub>0</sub> = p/q &plusmn; C<sub>pq</sub> &epsilon;<sup>|p&minus;q|</sup>
+</span>
+<div class="def-block">
+  <dl>
+    <dt>&epsilon;</dt>
+    <dd>Dimensionless coupling strength between the two oscillators.</dd>
+    <dt>p/q</dt>
+    <dd>Rational frequency ratio (a node on the Stern-Brocot tree).</dd>
+    <dt>C<sub>pq</sub></dt>
+    <dd>Order-unity coefficient determined by the normal-mode spectrum of
+        the proto-Earth. The tongue width scales as &epsilon;<sup>|p&minus;q|</sup>,
+        ensuring that low-order resonances (small |p&minus;q|) dominate.</dd>
+  </dl>
+</div>
+
+<h3>2. Stribeck Friction Law</h3>
+<p>
+  The effective friction coefficient governing tidal dissipation is a
+  velocity-dependent function of the form:
+</p>
+<span class="eq">
+  <span class="eq-label">(2)</span>
+  &mu;(v) = &mu;<sub>k</sub> + (&mu;<sub>s</sub> &minus; &mu;<sub>k</sub>)
+  exp(&minus;(v / v<sub>thr</sub>)&sup2;)
+</span>
+<div class="def-block">
+  <dl>
+    <dt>&mu;<sub>s</sub>, &mu;<sub>k</sub></dt>
+    <dd>Static and kinetic friction coefficients, respectively. The ratio
+        &mu;<sub>s</sub>/&mu;<sub>k</sub> sets the contrast between locked
+        (high-Q) and sliding (low-Q) regimes.</dd>
+    <dt>v<sub>thr</sub></dt>
+    <dd>Threshold velocity at the stick&ndash;slip transition. For the
+        lunar interior, v = R &epsilon; &omega;, where R is the lunar
+        radius and &omega; the tidal forcing frequency.</dd>
+    <dt>Q(&omega;)</dt>
+    <dd>The tidal quality factor follows as Q &prop; 1/&mu;(v(&omega;)),
+        yielding high Q at long periods (stick regime) and low Q at short
+        periods (slip regime).</dd>
+  </dl>
+</div>
+
+<h3>3. Angular Momentum at Fission</h3>
+<p>
+  At rotational breakup, the total angular momentum of the proto-Earth is:
+</p>
+<span class="eq">
+  <span class="eq-label">(3)</span>
+  L = I &omega;<sub>crit</sub> = &alpha; M R<sup>2</sup>
+  &radic;(4&pi;G&rho;/3)
+</span>
+<div class="def-block">
+  <dl>
+    <dt>&omega;<sub>crit</sub></dt>
+    <dd>Critical angular velocity at which centrifugal acceleration equals
+        surface gravity: &omega;<sub>crit</sub> = &radic;(4&pi;G&rho;/3).</dd>
+    <dt>&alpha;</dt>
+    <dd>Moment-of-inertia prefactor (0.33 for a differentiated Earth).</dd>
+    <dt>Residual</dt>
+    <dd>Evaluating with present-day M, R, and &rho; yields L within 5%
+        of the observed Earth&ndash;Moon system angular momentum, with no
+        adjustable parameters.</dd>
+  </dl>
+</div>
+
+<!-- ============================================================ -->
+<h2>Comparison of Recession Models</h2>
+<p>
+  Tidal friction transfers angular momentum from Earth&rsquo;s rotation to the
+  lunar orbit, causing secular recession. The constant-Q model assumes a smooth,
+  monotonic increase in orbital radius, whereas the staircase model predicts
+  discrete lock&ndash;stall&ndash;unlock episodes at each rational spin-orbit
+  resonance crossing.
 </p>
 
 <div class="viz-row">
@@ -243,26 +367,28 @@
     <h4>Constant-Q (Standard)</h4>
     <canvas id="canvas-cq"></canvas>
     <p class="viz-label">
-      Smooth curve. Predicts LOD = 21.3 hr at 2.45 Gya (observed: 19.0 hr)
-      and 23.5 hr at 620 Mya (observed: 21.5 hr). Overshoots by 9&ndash;11%.
+      Smooth monotonic curve. Predicts LOD = 21.3 hr at 2.45 Ga (observed: 19.0 hr)
+      and 23.5 hr at 620 Ma (observed: 21.5 hr). Systematic overshoot of 9&ndash;11%.
     </p>
   </div>
   <div class="viz-panel">
     <h4>Devil's Staircase (This Work)</h4>
     <canvas id="canvas-stair"></canvas>
     <p class="viz-label">
-      Step function. Plateaus at resonance crossings. Matches Weeli Wolli (19.0 hr)
-      and Elatina (21.5 hr) rhythmite data on published measurements.
+      Piecewise-constant evolution with plateaus at resonance crossings. Reproduces
+      the Weeli Wolli (19.0 hr) and Elatina (21.5 hr) tidal rhythmite measurements.
     </p>
   </div>
 </div>
 
 <!-- ============================================================ -->
-<h2>Side-by-Side: Tidal Q</h2>
+<h2>Comparison of Tidal Dissipation Models</h2>
 <p>
-  The Moon's tidal quality factor Q varies by an order of magnitude across
-  forcing periods. Standard models need 3&ndash;5 parameters. The Stribeck
-  curve uses one functional form with 3 parameters.
+  The lunar tidal quality factor Q varies by approximately one order of
+  magnitude across the observed range of forcing periods. Conventional
+  rheological models require 3&ndash;5 free parameters to accommodate this
+  variation. The Stribeck friction formulation achieves comparable or superior
+  fit quality with a single functional form and 3 parameters.
 </p>
 
 <div class="viz-row">
@@ -270,8 +396,8 @@
     <h4>Multi-Parameter Rheological Fit</h4>
     <canvas id="canvas-qstd"></canvas>
     <p class="viz-label">
-      Maxwell, Andrade, or Sundberg-Cooper models. 3&ndash;5 free parameters,
-      empirical relaxation timescales. Fits well but no single mechanism.
+      Maxwell, Andrade, or Sundberg-Cooper rheologies. 3&ndash;5 free parameters
+      with empirical relaxation timescales. Adequate fit, but no unifying physical mechanism.
     </p>
   </div>
   <div class="viz-panel">
@@ -279,19 +405,19 @@
     <canvas id="canvas-qstrib"></canvas>
     <p class="viz-label">
       &mu;(v) = &mu;<sub>k</sub> + (&mu;<sub>s</sub> &minus; &mu;<sub>k</sub>)
-      exp(-(v/v<sub>thr</sub>)&sup2;). Three parameters. &chi;&sup2;/N = 0.81.
-      Stick regime (long period) &rarr; high Q. Slip regime (short period) &rarr; low Q.
+      exp(&minus;(v/v<sub>thr</sub>)&sup2;). Three parameters; &chi;&sup2;/N = 0.81.
+      Stick regime (long period) yields high Q; slip regime (short period) yields low Q.
     </p>
   </div>
 </div>
 
 <!-- ============================================================ -->
 <h2>Residual Comparison</h2>
-<p>Where each model deviates from observation. Lower is better.</p>
+<p>Model&ndash;observation residuals for selected constraints. Shorter bars indicate closer agreement with data.</p>
 
 <div class="bar-chart">
   <div class="bar-row">
-    <span class="bar-label">LOD @ 2.45 Gya</span>
+    <span class="bar-label">LOD @ 2.45 Ga</span>
     <div class="bar-track">
       <div class="bar-fill standard" style="width: 55%"></div>
       <div class="bar-fill revision" style="width: 5%"></div>
@@ -299,7 +425,7 @@
     <span class="bar-value fail">11% / <span class="ok">~0%</span></span>
   </div>
   <div class="bar-row">
-    <span class="bar-label">LOD @ 620 Mya</span>
+    <span class="bar-label">LOD @ 620 Ma</span>
     <div class="bar-track">
       <div class="bar-fill standard" style="width: 45%"></div>
       <div class="bar-fill revision" style="width: 5%"></div>
@@ -340,42 +466,49 @@
   </div>
 </div>
 <p style="font-size:0.75rem">
-  <span style="color:var(--red)">&block;</span> Standard model &nbsp;
-  <span style="color:var(--green)">&block;</span> Fission (this work) &nbsp;
-  Bar width &prop; severity of residual.
+  <span style="color:var(--red)">&block;</span> Canonical giant-impact model &nbsp;
+  <span style="color:var(--green)">&block;</span> Tongue-boundary fission (this work) &nbsp;
+  Bar width is proportional to residual magnitude.
 </p>
 
 <!-- ============================================================ -->
-<h2>The One Mechanism</h2>
+<h2>Unifying Mechanism</h2>
 <p>
-  Every row in the table above is an instance of the same transition:
-  an oscillation reaching an Arnold tongue boundary and entering the
-  lower-cost locked regime. The tongue boundaries are saddle-node
-  bifurcations on the Stern-Brocot tree. The coupling is velocity-dependent
-  (Stribeck friction). The framework derives from four irreducible
-  primitives &mdash; integers, mediants, fixed points, parabolas &mdash;
-  validated in <a href="https://github.com/nickjoven/harmonics">harmonics</a>
-  where the same structure produces the CMB spectral tilt, the Born rule,
+  Each row in the preceding table can be understood as an instance of a single
+  dynamical transition: an oscillatory degree of freedom encountering an Arnold
+  tongue boundary and locking into the energetically favorable synchronized
+  regime. The tongue boundaries correspond to saddle-node bifurcations
+  organized on the Stern-Brocot tree, and the coupling is governed by
+  velocity-dependent (Stribeck) friction. The framework is derived from four
+  irreducible mathematical primitives&mdash;integers, mediants, fixed points,
+  and parabolas&mdash;and has been independently validated in
+  <a href="https://github.com/nickjoven/harmonics">Joven (2026)</a>,
+  where the same structure yields the CMB spectral tilt, the Born rule,
   and general relativity with zero free parameters.
 </p>
 
-<h3>Known weaknesses</h3>
+<h3>Known Limitations</h3>
 <ul>
-  <li>Mass ratio: 17% residual (largest). Closing requires the full
-      proto-Earth normal-mode spectrum, not just the shell model.</li>
-  <li>Volatile model: fits thermal channel but can't yet separate three
-      concurrent tongue crossings (density, thermal, condensation).</li>
-  <li>Cassini inclination: correctly identifies the mechanism but does not
-      yet compute the exact angle from first principles.</li>
+  <li><strong>Mass ratio:</strong> The 17% residual is the largest in the framework.
+      Reducing it will require the full proto-Earth normal-mode spectrum rather
+      than the simplified shell approximation employed here.</li>
+  <li><strong>Volatile depletion:</strong> The model reproduces the thermal
+      fractionation channel but does not yet deconvolve the three concurrent
+      tongue crossings (density, thermal, and condensation).</li>
+  <li><strong>Orbital inclination:</strong> The Cassini-state bifurcation
+      mechanism is correctly identified, but the exact inclination has not yet
+      been computed from first principles.</li>
 </ul>
 
-<h3>What the data already shows</h3>
+<h3>Summary of Empirical Support</h3>
 <ul>
-  <li>LOD at 2.45 Gya and 620 Mya <strong>already favor the staircase</strong>
-      over constant-Q on published tidal rhythmite data.</li>
-  <li>Tidal Q fit (&chi;&sup2;/N = 0.81) matches or beats multi-parameter
-      rheological models with fewer parameters.</li>
-  <li>Isotopic identity is <strong>forced</strong> by fission, not fitted.</li>
+  <li>Published tidal rhythmite data at 2.45 Ga and 620 Ma
+      <strong>favor the staircase model</strong> over constant-Q recession.</li>
+  <li>The Stribeck tidal Q fit (&chi;&sup2;/N = 0.81) matches or exceeds the
+      performance of multi-parameter rheological models while employing fewer
+      free parameters.</li>
+  <li>Earth&ndash;Moon isotopic identity is a <strong>structural consequence</strong>
+      of fission, not an adjusted parameter.</li>
 </ul>
 
 <footer>
