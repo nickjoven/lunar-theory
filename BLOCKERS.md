@@ -4,6 +4,9 @@ N. Joven — 2026 — [ORCID 0009-0008-0679-0812](https://orcid.org/0009-0008-06
 
 Three residuals remain open. Each is a well-posed sub-problem with
 identified inputs, a known gap, and a concrete closure condition.
+None require new physics — they require applying existing methods
+(computational seismology, thermochemical tables, Hamiltonian
+celestial mechanics) to the framework's specific boundary conditions.
 
 ---
 
@@ -20,36 +23,41 @@ model assigns each radial shell a single effective frequency
 q_eff = 2 sqrt(rho_shell / rho_mean) and asks whether that frequency
 falls inside a window |q - 2| < 0.5. This is a coarse proxy for the
 actual l = 2 eigenfrequency spectrum of a self-gravitating,
-compressible, rotating body. Closing the residual requires:
+compressible, rotating body.
 
-1. **Continuous radial integration.** Replace the 5-shell model with a
-   continuous PREM-like density profile rho(r) for a hotter, partially
-   differentiated proto-Earth (~4000 K, ~1.02 R_Earth). Integrate the
-   spectral weight as a function of radius rather than summing over
-   discrete shells.
+**Why it is addressable.** This is standard computational seismology
+applied to a non-standard body. Every input exists:
 
-2. **Normal-mode eigenfrequencies.** Solve the linearized oscillation
-   equations (Alterman-Jarosch-Pekeris or equivalent) for the l = 2
-   toroidal and spheroidal modes of the proto-Earth. The eigenfrequency
-   spectrum determines which radial regions contribute to the 1/2
-   tongue and which contribute to higher-order tongues.
+1. **The density profile is known.** PREM (Dziewonski & Anderson 1981)
+   gives rho(r) for the present Earth. Scaling to proto-Earth conditions
+   (~4000 K, ~1.02 R_Earth) requires adjusting the elastic moduli via
+   thermoelastic parameters (Stacey & Davis 2008, ch. 19). The thermal
+   equation of state is tabulated; no new measurements are needed.
 
-3. **Coupling-dependent tongue width.** The tongue width w(1/2, K) is
-   currently evaluated at a single K = 0.45 with scan resolution
-   n_scan = 300. The mass ratio prediction needs w evaluated at the
-   self-consistent K_eff from the field equation
-   (`origin/field_equation.py`), with higher scan resolution
-   (n_scan >= 1000) to reduce discretization error at the tongue
-   boundary.
+2. **The eigenvalue problem is solved.** The Alterman-Jarosch-Pekeris
+   (1959) equations for free oscillations of a self-gravitating sphere
+   are textbook material (Dahlen & Tromp 1998, ch. 8). Codes exist:
+   MINEOS computes normal modes for arbitrary radial profiles. The
+   l = 2 spheroidal modes (_0S_2, _1S_2, ...) are the ones that
+   contribute to g(1/2). The calculation is: feed the hot PREM profile
+   into the eigenvalue solver, read off the l = 2 eigenfrequency
+   spectrum, compute the spectral weight in the 1/2 tongue window.
+
+3. **The tongue width sharpens with resolution.** Increasing n_scan
+   from 300 to 1000+ in `tongue_scan.py` is a compute-time change,
+   not a conceptual one. The self-consistent K_eff from the field
+   equation (`origin/field_equation.py`) is already computed; it just
+   needs to feed back into the tongue-width evaluation.
+
+**What makes this a sub-problem and not a research frontier:** the
+proto-Earth's moment of inertia (C/MR^2 = 0.33) already constrains the
+density profile tightly. The inversion g(1/2) = 0.01214 / w(1/2) = 0.76
+is a single number that the normal-mode spectrum either confirms or
+refutes. There is no fitting — it's a check.
 
 **Closure condition.** g(1/2) computed from the continuous normal-mode
 spectrum, combined with w(1/2, K_eff) at high scan resolution, gives
 M_Moon / M_total within 5% of the observed 1.21%.
-
-**Current best estimate.** The shell model gives g(1/2) = 0.76; the
-required value is 0.76 (= 0.01214 / 0.016). These agree, but the
-agreement is only as trustworthy as the shell discretization. The
-normal-mode calculation is the independent check.
 
 **Modules.** `origin/g_half_density.py`, `origin/bifurcation_fission.py`,
 `origin/field_equation.py`, `tongue_scan.py`.
@@ -78,28 +86,54 @@ simultaneously account for:
   fission temperature and remain bound. This is a tongue crossing at
   the condensation-frequency scale.
 
-**What is missing.** A three-channel model with three independent
-Stribeck thresholds:
+**Why it is addressable.** The three channels are physically independent
+filters acting in sequence. Each element passes through all three, and
+the combined depletion is the product. This makes the fit separable —
+each channel can be constrained against its own element subset, then the
+product checked against the full set.
 
-1. **v_thr_density** — the frequency threshold in the density-dependent
-   spectral weight (same as the g(omega) calculation in Blocker 1).
-   Elements above this threshold are retained by the parent body.
+1. **Density channel: constrained by Blocker 1.** The spectral weight
+   g(omega) from the normal-mode spectrum gives the density-frequency
+   threshold directly. For each element, the effective oscillation
+   frequency depends on its atomic density in the melt. Siderophiles
+   (Fe, Ni) have high density and fall outside the 1/2 window;
+   lithophiles fall inside. The threshold is not free — it is the same
+   tongue boundary that determines the mass ratio. Once Blocker 1 is
+   closed, v_thr_density is fixed with zero additional parameters.
 
-2. **v_thr_thermal** — the Jeans-like thermal escape threshold (already
-   fitted: ~8% of v_escape). Elements above this threshold escape the
-   daughter body.
+2. **Thermal channel: already fitted.** v_thr_thermal = 8% of v_escape
+   from the existing single-Gaussian fit. The Jeans escape criterion
+   (lambda_crit ~ 10, i.e. v_thr/v_esc ~ 1/sqrt(10) ~ 0.1) provides
+   an independent check. The only refinement is re-fitting after
+   removing the siderophile and refractory elements from the volatile-
+   only Gaussian, which will tighten the thermal v_thr.
 
-3. **v_thr_condensation** — the condensation-frequency threshold. Below
-   the fission temperature's blackbody peak, refractory elements
-   condense and are gravitationally captured by the nearest body.
+3. **Condensation channel: tabulated.** Condensation temperatures for
+   every relevant element at solar-nebula conditions are published
+   (Lodders 2003, Table 8; Wood et al. 2019). The mapping from
+   condensation temperature to a Stribeck threshold is:
+   v_thr_cond ~ sqrt(k_B T_cond / m_atom). Refractories (Ca, Al, Ti)
+   have T_cond > T_fission — they are solid at the fission boundary and
+   partition gravitationally. Volatiles have T_cond < T_fission — they
+   are vapor and subject to the thermal channel. The condensation
+   threshold is not fitted; it is read from thermochemical tables.
 
-Each channel is Stribeck in structure (Gaussian attenuation at its
-boundary), but they operate on different velocity scales and are
-currently convolved into one fit.
+**What makes this separable:** each channel acts on a different physical
+variable (mode frequency, thermal velocity, condensation state). An
+element's observed depletion is the product of three independent
+Stribeck transmissions. The density channel partitions elements into
+core vs. mantle. The thermal channel partitions mantle volatiles into
+escaped vs. retained. The condensation channel partitions retained
+material into refractory-enriched vs. baseline. Because the channels
+operate on orthogonal variables, cross-talk is minimal, and each can be
+validated independently before combining.
 
 **Closure condition.** Fit all 13 elements in `ELEMENTS` (Fe through Ti)
-with a three-channel model, each channel having one v_thr parameter
-(three total). Chi-squared in log-space should improve by >2x over the
+with the three-channel product model. The density threshold comes from
+Blocker 1 (zero free parameters). The thermal threshold is re-fitted on
+volatiles only (one parameter). The condensation threshold is read from
+Lodders (2003) (zero free parameters). Total free parameters: one (down
+from one). Chi-squared in log-space should improve by >2x over the
 single-channel fit, and no element should be off by more than a factor
 of 2.
 
@@ -121,37 +155,56 @@ principles. Instead, it observes that 5.145 deg / 23.44 deg = 0.22 and
 writes i = epsilon * sin(eta), then solves for eta = 12.7 deg from the
 known answer. This is a consistency check, not a prediction.
 
-**What is missing.** A first-principles calculation of the Cassini state
-transition angle:
+**Why it is addressable.** The Cassini state problem is textbook
+Hamiltonian celestial mechanics. The theory was developed by Colombo
+(1966), Peale (1969), and Ward (1975), and the specific application to
+the early Moon was computed by Ward & Canup (2000). Every ingredient
+is published:
 
-1. **Hamiltonian for the spin-orbit-precession system.** The Cassini
-   states are equilibria of a Hamiltonian that couples the Moon's spin
-   axis, its orbit normal, and the ecliptic normal, with torques from
-   Earth's oblateness (J2), solar gravitational torque, and tidal
-   dissipation. The current code models only the J2 precession rate; it
-   omits the solar torque's distance dependence and the dissipation
-   that selects the final state.
+1. **The Hamiltonian is one degree of freedom.** After orbit-averaging,
+   the Cassini state Hamiltonian depends on a single angle (the
+   obliquity theta between the Moon's orbit normal and the ecliptic
+   normal). The three torques — Earth's J2, solar gravitation, and
+   tidal dissipation — are functions of a single parameter: the ratio
+   kappa = precession rate / orbital rate. The Cassini states are the
+   equilibria dH/dtheta = 0. This is a 1D root-finding problem at each
+   orbital distance a.
 
-2. **Bifurcation analysis at the critical distance.** At the transition
-   distance a_crit, two of the four Cassini states merge and annihilate
-   (saddle-node). The inclination acquired at the transition depends on
-   the rate at which the Moon traverses the bifurcation (non-adiabatic
-   capture angle) and the initial conditions (obliquity of the
-   proto-Earth at fission). This requires solving for the separatrix
-   geometry at a_crit.
+2. **The critical distance a_crit is determined by angular momentum
+   conservation.** At fission, L_total = I_Earth * omega_spin +
+   M_Moon * sqrt(G M_Earth a). This is known (L_total = 1.05 L_obs).
+   As the Moon recedes, omega_spin drops. The obliquity epsilon(a) at
+   each distance follows from the angular momentum partition — no free
+   parameter. Ward & Canup (2000) computed the Cassini transition at
+   a_crit ~ 34 R_E for the giant-impact scenario; the fission scenario
+   changes the initial angular momentum and obliquity, shifting a_crit,
+   but the method is identical.
 
-3. **Earth's obliquity at 4-5 R_E.** The current code uses the modern
-   obliquity (23.44 deg), but at 4-5 R_E the obliquity was different — both
-   because of angular momentum transfer and because the Cassini
-   transition itself alters the coupled spin-orbit geometry. The
-   obliquity at the transition distance must be self-consistently
-   determined.
+3. **The capture angle depends on the traversal rate.** When the system
+   crosses the bifurcation non-adiabatically, the acquired inclination
+   depends on da/dt at a_crit (Henrard 1982, Quillen et al. 2006). The
+   recession rate da/dt at a_crit comes from the tidal model (already
+   computed in `history/tidal_stribeck.py`). Faster traversal means
+   less inclination captured; slower means more. This converts the
+   tidal Q at a_crit (from the Stribeck fit) into a predicted
+   inclination — connecting Blocker 3 to the tidal model with zero
+   additional parameters.
+
+**What makes this closed-form:** the Cassini Hamiltonian at the
+bifurcation has the normal form of a saddle-node, H ~ theta^3 + mu*theta
+where mu ~ (a - a_crit). The non-adiabatic capture probability is
+P ~ exp(-c / |dmu/dt|) (Henrard 1982). The inputs are: L_total (known),
+epsilon(a_crit) (from angular momentum conservation), kappa(a_crit)
+(from the J2 + solar precession rates), and da/dt (from the tidal
+model). All are already computed in the repository. The remaining work
+is to assemble them into the standard Cassini Hamiltonian and evaluate.
 
 **Closure condition.** Solve the Cassini Hamiltonian for the transition
-at a_crit, with self-consistent obliquity, and obtain i_final within
-10% of 5.145 deg without using the observed inclination as input.
+at a_crit, with self-consistent obliquity from L_total and da/dt from
+the tidal model, and obtain i_final within 10% of 5.145 deg without
+using the observed inclination as input.
 
-**Modules.** `behavior/cassini_inclination.py`.
+**Modules.** `behavior/cassini_inclination.py`, `history/tidal_stribeck.py`.
 
 ---
 
@@ -160,6 +213,9 @@ at a_crit, with self-consistent obliquity, and obtain i_final within
 Blockers 1 and 2 share the density-dependent spectral weight g(omega).
 The normal-mode spectrum needed for Blocker 1 also provides the
 density-sorting threshold (v_thr_density) needed for Blocker 2's
-three-channel model. Blocker 3 is independent.
+three-channel model. Blocker 3 is independent of 1 and 2 but connects
+to the tidal model through the recession rate at a_crit.
 
-Recommended order: 1 -> 2 -> 3.
+Recommended order: 1 -> 2 -> 3. Blocker 3 can proceed in parallel with
+1 and 2 since its inputs (L_total, tidal Q, precession rates) are
+already computed.
