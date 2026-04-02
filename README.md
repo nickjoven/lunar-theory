@@ -1,5 +1,7 @@
 # lunar-theory
 
+https://nickjoven.github.io/lunar-theory/
+
 > *"We have three theories of the origin of the Moon, and none of them
 > work. So the Moon must not exist."* — Irwin Shapiro, 1984 Hawaii
 > conference
@@ -238,6 +240,9 @@ within 1.6×) but can't distinguish it from density sorting
 Gaussian. These are three tongue-boundary crossings at three velocity
 scales. The multi-channel structure is identified; the parameters are
 independently measurable.
+
+See [BLOCKERS.md](BLOCKERS.md) for formalized blocker descriptions,
+closure conditions, and recommended resolution order.
 
 ## Beyond the Moon
 
