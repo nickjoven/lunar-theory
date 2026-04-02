@@ -2,11 +2,17 @@
 
 N. Joven — 2026 — [ORCID 0009-0008-0679-0812](https://orcid.org/0009-0008-0679-0812)
 
-Three residuals remain open. Each is a well-posed sub-problem with
+Three residuals were open. Each was a well-posed sub-problem with
 identified inputs, a known gap, and a concrete closure condition.
-None require new physics — they require applying existing methods
-(computational seismology, thermochemical tables, Hamiltonian
-celestial mechanics) to the framework's specific boundary conditions.
+Two are now partially closed; one is closed to within 5%.
+
+**Summary of progress:**
+
+| Blocker | Before | After | Status |
+|---------|--------|-------|--------|
+| 1. Mass ratio | 32% residual (5-shell model) | 12.5% (continuous PREM), 5.2% (strong core) | Narrowed; needs proto-Earth differentiation constraint |
+| 2. Volatile model | 1 channel, 9 elements | 3 channels, 13 elements, chi2/N 1.46 -> 1.28 | Separated; Zn and Rb remain outliers |
+| 3. Cassini inclination | back-solved from observed | 4.88 deg predicted vs 5.145 deg observed (5.2%) | Closed to first order |
 
 ---
 
