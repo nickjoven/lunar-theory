@@ -2,8 +2,8 @@
 Bare-frequency distribution g(1/2) from proto-Earth's radial density profile.
 
 Closes the mass-ratio residual (Claim 4):
-    Raw tongue width: w(1/2, K=0.45) = 0.016  →  1.6% vs observed 1.21%
-    Residual: 32%
+    Exact tongue width: w(1/2, K=0.45) = 0.01585 (from circle map bifurcation)
+    Raw prediction: 1.585% vs observed 1.21%
 
 The full mass ratio prediction is:
     M_Moon/M_total = w(1/2, K) × g(1/2)

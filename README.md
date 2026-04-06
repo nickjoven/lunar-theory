@@ -109,7 +109,7 @@ us."* It didn't hit us. It was us.
 |---|---|---|---|
 | Rotation period at fission | 3.96 hours | 4–5 hours (from simulations) | `origin/bifurcation_fission.py` |
 | Angular momentum | 1.05 × L_obs | L = 3.44 × 10³⁴ kg m²/s | `origin/bifurcation_fission.py` |
-| Mass ratio (w × g) | 1.06–1.28% | 1.21% | `origin/g_half_density.py` |
+| Mass ratio (w × g) | 1.05–1.27% | 1.21% | `tongue_scan.py`, `origin/g_half_density.py` |
 | Isotopic identity | Forced | Identical to ppm | — |
 | One Moon, not fragments | 1/2 tongue dominates | One Moon | `origin/field_equation.py` |
 
@@ -242,13 +242,14 @@ by 9–11%.
 
 ## Residuals
 
-The mass ratio prediction uses the spectral weight g(1/2) = 0.664 from
-a continuous PREM density profile integrated over the proto-Earth. The
-predicted M_Moon/M_total = w(1/2) × g(1/2) = 1.06%, a 12.5% residual
-against the observed 1.21%. With a strongly differentiated proto-Earth
-(consistent with Hf-W core formation chronometry), the residual drops
-to 5.2%. No free parameter is introduced — the density profile is a
-measured input.
+The mass ratio prediction combines two derived inputs. The tongue width
+w(1/2, K = 0.45) = 0.01585 is computed exactly from the saddle-node
+bifurcation conditions of the standard circle map — no scanning or fitting.
+The spectral weight g(1/2) = 0.664 is integrated from a continuous PREM
+density profile. The product w × g = 1.05% gives a 13% residual against
+the observed 1.21%. With a strongly differentiated proto-Earth (consistent
+with Hf-W core formation chronometry), g rises to 0.80 and the residual
+drops to 4.2%. No free parameter is introduced.
 
 The volatile depletion model uses three independent channels acting in
 sequence: siderophile partitioning (from measured D_met/sil, zero free

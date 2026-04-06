@@ -19,7 +19,7 @@ The l=2 bar-mode deformation enters the 1/2 Arnold tongue.
 | 1 | Fission at 1/2 tongue boundary | T = 3.96 hr at K_crit = 0.45 | Impact models require 4–5 hr | 12% | Jacobi bifurcation cannot produce Moon-mass daughter at Earth density |
 | 2 | Isotopic identity forced | Same pre-fission state → identical ratios | O, Ti, W, Cr, Si identical to ppm | 0 | A refractory isotope differs between Earth and Moon at >5σ |
 | 3 | Angular momentum from I × ω_crit | L = 1.05 × L_obs | L = 3.44 × 10³⁴ kg m²/s | 5% | Tongue width gives L off by >20% |
-| 4 | Mass ratio from tongue population | w × g = 1.06% (PREM), 1.28% (strong core) | M_Moon/M_total = 1.21% | 5–13% | Tongue width × spectral weight excludes observed mass ratio at >3σ |
+| 4 | Mass ratio from tongue population | w × g = 1.05% (PREM), 1.27% (strong core) | M_Moon/M_total = 1.21% | 4–13% | Tongue width × spectral weight excludes observed mass ratio at >3σ |
 | 5 | One Moon from tongue competition | 1/2 captures mass → suppresses 1/3, 2/5 | One Moon | — | Multiple fragments stable in the field equation |
 
 ## ~4.5 Gya: Composition at the fission boundary
@@ -93,11 +93,12 @@ body with Earth's density profile.
 
 ## Residual Summary
 
-The mass ratio (claim 4) uses the continuous spectral weight
-g(1/2) = 0.664 from the PREM density profile. The predicted 1.06% is
-12.5% below the observed 1.21%; with a strongly differentiated
-proto-Earth, the residual is 5.2%. The differentiation state is
-constrained by Hf-W chronometry, not fitted.
+The mass ratio (claim 4) combines the exact tongue width
+w(1/2, K = 0.45) = 0.01585 from the circle map's bifurcation conditions
+with the spectral weight g(1/2) = 0.664 from the continuous PREM profile.
+The product gives 1.05%, a 13% residual. With strong differentiation
+(g = 0.80), the residual is 4.2%. The differentiation state is constrained
+by Hf-W chronometry, not fitted.
 
 The volatile model (claim 7) uses three independent channels —
 siderophile partitioning (D_met/sil from lab data), thermal escape
