@@ -197,6 +197,16 @@ unknown excitation source. The framework says: the Moon sits at the
 between stick and slip micro-states is the libration. It's the
 equilibrium behavior, not an anomaly.
 
+### Why is Earth's obliquity stable?
+
+The Moon's gravitational torque on Earth's equatorial bulge sets the axial
+precession rate to ~50"/yr — safely 3× outside the s6 secular-resonance
+tongue (Saturn's nodal frequency at 26.3"/yr). Without the Moon, the rate
+drops to ~16"/yr, the gap shrinks to 1.3 tongue-widths, and obliquity
+wanders chaotically between 0° and 85° (Laskar, Joutel & Robutel 1993).
+Same mechanism: a frequency held outside a tongue boundary by the coupling
+set at fission. (`behavior/obliquity_stability.py`)
+
 ### What about evection resonance?
 
 The synestia model's escape hatch for removing angular momentum. The
@@ -208,7 +218,7 @@ momentum removal required.
 
 ## Against existing observations
 
-Seven claims map directly to published lunar data:
+Eight claims map directly to published lunar data:
 
 | Claim | Data source | Framework | Standard model |
 |---|---|---|---|
@@ -218,6 +228,7 @@ Seven claims map directly to published lunar data:
 | LOD at 2.45 Gya | Weeli Wolli rhythmites | Plateau at 19.0 hr ✓ | Predicts 21.3 hr (11% off) |
 | LOD at 620 Mya | Elatina rhythmites | Plateau at 21.5 hr ✓ | Predicts 23.5 hr (9% off) |
 | KREEP distribution | Lunar Prospector Th map | N=2 passthrough ✓ | Requires impact geometry or mantle plume |
+| Obliquity stability | Secular integration (Laskar 1993) | Moon holds precession 3× outside s6 tongue | Not addressed (assumed stable) |
 | Iron/volatile depletion | Apollo bulk composition | Correct direction | Requires impact + core merging |
 
 Two of these — the LOD measurements at 2.45 Gya and 620 Mya —
@@ -291,6 +302,7 @@ python3 behavior/tidal_q_stribeck.py
 python3 behavior/libration_tongue_edge.py
 python3 behavior/cassini_inclination.py
 python3 behavior/ocean_resonance_q.py
+python3 behavior/obliquity_stability.py
 
 # Solar system
 python3 solar_system/mercury_32.py
@@ -302,11 +314,11 @@ python3 solar_system/tidal_rhythmites.py
 ## Visual comparison
 
 Open [index.html](index.html) for an interactive side-by-side comparison
-of the standard model vs the tongue-boundary framework across all 13 puzzles.
+of the standard model vs the tongue-boundary framework across all 14 puzzles.
 
 ## Predictions
 
-See [CLAIMS.md](CLAIMS.md) for all 18 numbered predictions with
+See [CLAIMS.md](CLAIMS.md) for all 19 numbered predictions with
 falsification criteria and residuals.
 
 ## Author
