@@ -64,6 +64,14 @@ Two observables of the current tongue geometry.
 | 17 | Tidal Q from one Stribeck curve | Stick/slip threshold at v_thr = 10⁻⁷ m/s | Q: 38–200 across periods | χ²/N = 0.81 | Q at any period off by >3σ from curve |
 | 18 | Librations = 1:1 tongue boundary riding | Equilibrium stick-slip oscillation at edge | 1.5" longitude, 8.2" wobble | mechanism ✓ | Librations require external excitation with measured energy |
 
+## Present: Obliquity stability
+
+The Moon's torque holds Earth's precession rate outside the secular-resonance tongues.
+
+| # | Claim | Prediction | Observed | Residual | Falsification |
+|---|-------|-----------|----------|----------|---------------|
+| 19 | Obliquity stable because precession rate outside s6 tongue | gap/w = 3.0 with Moon; gap/w = 1.3 without → chaotic | Obliquity stable at 23.44° | gap/w ✓ | Secular integration stable without Moon at >5 Gyr |
+
 ## Self-consistency
 
 The Q fit (claim 17) determines the Stribeck parameters. Those parameters
