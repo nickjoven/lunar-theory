@@ -72,26 +72,7 @@ The Moon's torque holds Earth's precession rate outside the secular-resonance to
 |---|-------|-----------|----------|----------|---------------|
 | 19 | Obliquity stable because precession rate outside s6 tongue | gap/w = 3.0 with Moon; gap/w = 1.3 without → chaotic | Obliquity stable at 23.44° | gap/w ✓ | Secular integration stable without Moon at >5 Gyr |
 
-## Self-consistency
-
-The Q fit (claim 17) determines the Stribeck parameters. Those parameters
-determine Q(a) at every orbital distance. Q(a) determines K(a), which
-determines the local staircase locked fraction. Integrating over the full
-recession (claim 13) gives the timeline bounds.
-
-This loop has **zero additional free parameters**. The Q-fit Stribeck
-baseline (Q ≈ 40) gives 8.42 Gyr. The constant-Q anomaly (Q ≈ 12) gives
-1.65 Gyr. The observed 4.5 Gyr falls between — consistent with Q ≈ 40
-for most of history, Q ≈ 12 during the current ocean-resonance epoch
-(claim 15).
-
-The mass ratio residual (claim 4) is bounded by the bare-frequency
-distribution g(1/2), which is constrained by the proto-Earth's moment of
-inertia (C/MR² = 0.33). Reversing: g(1/2) = 0.012/0.016 = 0.76 is a
-testable prediction against the l=2 normal-mode spectral weight of a
-body with Earth's density profile.
-
-## Residual Summary
+## Residuals
 
 The mass ratio (claim 4) combines the exact tongue width
 w(1/2, K = 0.45) = 0.01585 from the circle map's bifurcation conditions

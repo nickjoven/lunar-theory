@@ -219,54 +219,6 @@ precession entering the solar-frequency tongue at ~30–35 R_E) is just
 another staircase crossing. The Moon passes through it. No angular
 momentum removal required.
 
-## Against existing observations
-
-Eight claims map directly to published lunar data:
-
-| Claim | Data source | Framework | Standard model |
-|---|---|---|---|
-| Isotopic identity | Apollo samples (50 yr) | Forced by fission | Requires mixing or identical impactor |
-| Angular momentum | Orbital mechanics | 5% residual | Requires tuned impact geometry |
-| Tidal Q (χ²/N = 0.81) | Lunar Laser Ranging | One Stribeck curve, 3 params | 3–5 param rheological models |
-| LOD at 2.45 Gya | Weeli Wolli rhythmites | Plateau at 19.0 hr ✓ | Predicts 21.3 hr (11% off) |
-| LOD at 620 Mya | Elatina rhythmites | Plateau at 21.5 hr ✓ | Predicts 23.5 hr (9% off) |
-| KREEP distribution | Lunar Prospector Th map | N=2 passthrough ✓ | Requires impact geometry or mantle plume |
-| Obliquity stability | Secular integration (Laskar 1993) | Moon holds precession 3× outside s6 tongue | Not addressed (assumed stable) |
-| Iron/volatile depletion | Apollo bulk composition | Correct direction | Requires impact + core merging |
-
-Two of these — the LOD measurements at 2.45 Gya and 620 Mya —
-**already favor the staircase over the constant-Q model** on published
-data. This is not a prediction waiting for future observations. The
-data exists. The staircase fits it. The constant-Q model overshoots
-by 9–11%.
-
-## Residuals
-
-The mass ratio prediction combines two derived inputs. The tongue width
-w(1/2, K = 0.45) = 0.01585 is computed exactly from the saddle-node
-bifurcation conditions of the standard circle map — no scanning or fitting.
-The spectral weight g(1/2) = 0.664 is integrated from a continuous PREM
-density profile. The product w × g = 1.05% gives a 13% residual against
-the observed 1.21%. With a strongly differentiated proto-Earth (consistent
-with Hf-W core formation chronometry), g rises to 0.80 and the residual
-drops to 4.2%. No free parameter is introduced.
-
-The volatile depletion model uses three independent channels acting in
-sequence: siderophile partitioning (from measured D_met/sil, zero free
-parameters), thermal escape (Jeans criterion, one free parameter), and
-condensation retention (from Lodders 2003 T_cond tables, zero free
-parameters in functional form). The three-channel product fits all 13
-elements at χ²/N = 1.28 with 2 free parameters. Zn and Rb are outliers
-(underpredicted >10×), traceable to sulfide partitioning — a fourth
-channel not yet included.
-
-The Cassini inclination is derived from first principles: the Laplace
-plane transition at ~15 R_E releases a free inclination of ε/2 = 7.65°,
-damped over 4.5 Gyr to 4.88° — a 5.2% residual against the observed
-5.145°. No observed inclination is used as input.
-
-See [BLOCKERS.md](BLOCKERS.md) for the full residual budget.
-
 ## Beyond the Moon
 
 The same tongue-boundary crossing applies to:
@@ -323,15 +275,11 @@ python3 solar_system/kirkwood_gaps.py
 python3 solar_system/tidal_rhythmites.py
 ```
 
-## Visual comparison
-
-Open [index.html](index.html) for an interactive side-by-side comparison
-of the standard model vs the tongue-boundary framework across all 14 puzzles.
-
 ## Predictions
 
-See [CLAIMS.md](CLAIMS.md) for all 19 numbered predictions with
-falsification criteria and residuals.
+[CLAIMS.md](CLAIMS.md) — 19 numbered predictions with falsification
+criteria and residuals. [index.html](index.html) — interactive
+side-by-side comparison across all 14 puzzles.
 
 ## Author
 
