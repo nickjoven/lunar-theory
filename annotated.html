@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.21%</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #000;
+  color: #e6edf3;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.frame {
+  position: relative;
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+.frame img {
+  display: block;
+  max-width: 100vw;
+  max-height: 100vh;
+  object-fit: contain;
+}
+
+/* SVG overlay fills the image exactly */
+.overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+
+/* Annotation box */
+.callout {
+  position: absolute;
+  pointer-events: auto;
+  /* positioned by JS to track the image */
+}
+
+.callout-box {
+  background: rgba(0, 0, 0, 0.82);
+  border: 1px solid rgba(200, 210, 230, 0.25);
+  border-radius: 4px;
+  padding: 16px 20px;
+  max-width: 370px;
+  line-height: 1.55;
+  font-size: 13px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.callout-box .measurement {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.callout-box .measurement span {
+  font-size: 14px;
+  font-weight: 400;
+  color: #8b949e;
+  margin-left: 6px;
+}
+
+.callout-box .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #58a6ff;
+  margin-bottom: 10px;
+}
+
+.callout-box p {
+  color: #b1bac4;
+  margin-bottom: 8px;
+}
+
+.callout-box p:last-child {
+  margin-bottom: 0;
+}
+
+.callout-box .derivation {
+  color: #e6edf3;
+  font-size: 12px;
+  background: rgba(88, 166, 255, 0.08);
+  border-left: 2px solid #58a6ff;
+  padding: 8px 12px;
+  margin-top: 10px;
+}
+
+.callout-box .derivation .eq {
+  font-style: italic;
+  color: #fff;
+}
+
+/* Pulse ring around the Moon */
+@keyframes pulse {
+  0%   { opacity: 0.7; r: 12; }
+  100% { opacity: 0;   r: 28; }
+}
+
+.pulse-ring {
+  fill: none;
+  stroke: #58a6ff;
+  stroke-width: 1;
+  animation: pulse 2.5s ease-out infinite;
+}
+
+.moon-ring {
+  fill: none;
+  stroke: rgba(200, 210, 230, 0.5);
+  stroke-width: 1;
+}
+
+.connector {
+  stroke: rgba(200, 210, 230, 0.25);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+  fill: none;
+}
+
+.credit {
+  position: absolute;
+  bottom: 8px;
+  left: 12px;
+  font-size: 10px;
+  color: rgba(200, 210, 230, 0.3);
+}
+</style>
+</head>
+<body>
+
+<div class="frame" id="frame">
+  <img src="earth_moon.jpg" alt="Earth and Moon from space" id="photo"
+       onerror="this.style.background='#111';this.style.width='960px';this.style.height='720px';this.alt='Place earth_moon.jpg in this directory';">
+
+  <svg class="overlay" id="svg" viewBox="0 0 1000 750" preserveAspectRatio="none">
+    <!-- Moon marker — coordinates in viewBox units -->
+    <circle class="pulse-ring" cx="555" cy="660" r="12" />
+    <circle class="pulse-ring" cx="555" cy="660" r="12" style="animation-delay: 0.8s" />
+    <circle class="moon-ring"  cx="555" cy="660" r="12" />
+
+    <!-- Connector line from Moon to callout -->
+    <path class="connector" d="M 555,648 C 555,600 650,560 700,545" />
+  </svg>
+
+  <div class="callout" style="right: 3%; top: 68%;">
+    <div class="callout-box">
+      <div class="label">No accepted formal derivation</div>
+      <div class="measurement">1.21% <span>M<sub>Moon</sub> / M<sub>total</sub></span></div>
+      <p>
+        Measured to four significant figures via laser ranging and
+        orbital mechanics. Every standard model treats this value as
+        a contingent outcome of unconstrained impact geometry.
+      </p>
+      <p>
+        The giant impact hypothesis can produce mass ratios from 0.1%
+        to 10% depending on impact angle and velocity. No simulation
+        predicts 1.21% from first principles.
+      </p>
+      <div class="derivation">
+        <span class="eq">M<sub>Moon</sub>/M<sub>total</sub> = w(1/2, K) &times; g(1/2)</span><br><br>
+        The 1/2 Arnold tongue width w = 0.01585 is derived exactly
+        from the circle map's saddle-node bifurcation at the fission
+        coupling. The spectral weight g = 0.66&ndash;0.80 is set by
+        the proto-Earth's density profile. Product: 1.05&ndash;1.27%.
+      </div>
+    </div>
+  </div>
+
+  <span class="credit">lunar-theory &mdash; N. Joven 2026</span>
+</div>
+
+<script>
+// Adjust SVG viewBox to match actual image aspect ratio
+const img = document.getElementById('photo');
+const svg = document.getElementById('svg');
+
+function adjustViewBox() {
+  const w = img.naturalWidth  || img.offsetWidth;
+  const h = img.naturalHeight || img.offsetHeight;
+  if (w > 0 && h > 0) {
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    // Scale marker positions proportionally
+    // Original positions calibrated for ~960x720 image
+    const sx = w / 960, sy = h / 720;
+    svg.querySelectorAll('circle').forEach(c => {
+      c.setAttribute('cx', 535 * sx);
+      c.setAttribute('cy', 633 * sy);
+    });
+    const path = svg.querySelector('.connector');
+    const x1 = 535*sx, y1 = 620*sy, x2 = 680*sx, y2 = 520*sy;
+    path.setAttribute('d',
+      `M ${x1},${y1} C ${x1},${(y1+y2)/2} ${(x1+x2)/2},${y2} ${x2},${y2}`);
+  }
+}
+
+img.addEventListener('load', adjustViewBox);
+if (img.complete) adjustViewBox();
+</script>
+</body>
+</html>

@@ -109,7 +109,7 @@ us."* It didn't hit us. It was us.
 |---|---|---|---|
 | Rotation period at fission | 3.96 hours | 4–5 hours (from simulations) | `origin/bifurcation_fission.py` |
 | Angular momentum | 1.05 × L_obs | L = 3.44 × 10³⁴ kg m²/s | `origin/bifurcation_fission.py` |
-| Mass ratio (tongue width) | 1.6% | 1.21% | `origin/bifurcation_fission.py` |
+| Mass ratio (w × g) | 1.05–1.27% | 1.21% | `tongue_scan.py`, `origin/g_half_density.py` |
 | Isotopic identity | Forced | Identical to ppm | — |
 | One Moon, not fragments | 1/2 tongue dominates | One Moon | `origin/field_equation.py` |
 
@@ -182,11 +182,14 @@ The staircase predicts plateaus at both values.
 ### What about the 5° orbital tilt?
 
 Fission from an equatorial bulge should produce a co-planar orbit.
-The Moon's 5.14° inclination historically killed fission models
-(including Darwin's 1879 proposal). The resolution: a Cassini state
-bifurcation at 4–5 R_E — the Moon's nodal precession crossing a
-solar-frequency resonance — pumps the inclination after formation.
-The 5.14° is set by the bifurcation, not by how the Moon formed.
+The Moon's 5.145° inclination historically killed fission models
+(including Darwin's 1879 proposal). The resolution: the Laplace plane
+transition at ~15 R_E — where J2-dominated precession yields to
+solar-dominated precession — is a Colombo top bifurcation that
+releases the orbit with a free inclination of ε/2 = 7.65°. Tidal
+damping over 4.5 Gyr reduces this to 4.88°, a 5.2% residual against
+the observed 5.145°. The derivation uses no observed inclination as
+input. (`behavior/cassini_inclination.py`)
 
 ### What about the librations?
 
@@ -237,23 +240,32 @@ data. This is not a prediction waiting for future observations. The
 data exists. The staircase fits it. The constant-Q model overshoots
 by 9–11%.
 
-## Known residuals
+## Residuals
 
-The mass ratio is the largest: tongue width gives 1.6% vs observed
-1.21% (32% off). Closing this requires computing the bare-frequency
-distribution g(1/2) from the proto-Earth's density profile — standard
-seismology applied to a hotter, larger body. The math exists; we
-haven't run it.
+The mass ratio prediction combines two derived inputs. The tongue width
+w(1/2, K = 0.45) = 0.01585 is computed exactly from the saddle-node
+bifurcation conditions of the standard circle map — no scanning or fitting.
+The spectral weight g(1/2) = 0.664 is integrated from a continuous PREM
+density profile. The product w × g = 1.05% gives a 13% residual against
+the observed 1.21%. With a strongly differentiated proto-Earth (consistent
+with Hf-W core formation chronometry), g rises to 0.80 and the residual
+drops to 4.2%. No free parameter is introduced.
 
-The volatile depletion model fits the thermal escape channel (K, S
-within 1.6×) but can't distinguish it from density sorting
-(siderophiles) or condensation retention (refractories) in a single
-Gaussian. These are three tongue-boundary crossings at three velocity
-scales. The multi-channel structure is identified; the parameters are
-independently measurable.
+The volatile depletion model uses three independent channels acting in
+sequence: siderophile partitioning (from measured D_met/sil, zero free
+parameters), thermal escape (Jeans criterion, one free parameter), and
+condensation retention (from Lodders 2003 T_cond tables, zero free
+parameters in functional form). The three-channel product fits all 13
+elements at χ²/N = 1.28 with 2 free parameters. Zn and Rb are outliers
+(underpredicted >10×), traceable to sulfide partitioning — a fourth
+channel not yet included.
 
-See [BLOCKERS.md](BLOCKERS.md) for formalized blocker descriptions,
-closure conditions, and recommended resolution order.
+The Cassini inclination is derived from first principles: the Laplace
+plane transition at ~15 R_E releases a free inclination of ε/2 = 7.65°,
+damped over 4.5 Gyr to 4.88° — a 5.2% residual against the observed
+5.145°. No observed inclination is used as input.
+
+See [BLOCKERS.md](BLOCKERS.md) for the full residual budget.
 
 ## Beyond the Moon
 
